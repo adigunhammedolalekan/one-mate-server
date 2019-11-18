@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package pb;
+
+message GetAccountRequest {
+    string token = 1;
+}
+
+message GetAccountResponse {
+    Account account = 1;
+}
+
+message Account {
+    int64 Id = 1;
+    string email = 2;
+    string password = 3;
+}
+
+service AccountService {
+    rpc GetAccount(GetAccountRequest) returns (GetAccountResponse) {}
+}

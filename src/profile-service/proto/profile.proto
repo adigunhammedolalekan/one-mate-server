@@ -1,0 +1,35 @@
+syntax = "proto3";
+package pb;
+
+message Photo {
+    int64 accountId = 1;
+    string accessUrl = 2;
+}
+
+message Profile {
+    int64 accountId = 1;
+    string name = 2;
+    int64 age = 3;
+    string sex = 4;
+    string complexion = 5;
+    string phoneNumber = 6;
+    string igUsername = 7;
+    string twitterUsername = 8;
+    string location = 9;
+    string about = 10;
+    string partnerDescription = 11;
+    string additionalInfo = 12;
+    repeated Photo photos = 13;
+}
+message CreateProfileRequest {
+    Profile data = 1;
+}
+
+message CreateProfileResponse {
+    Profile data = 1;
+}
+
+service ProfileService {
+    rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse) {}
+}
+

@@ -1,0 +1,55 @@
+version: "3"
+services:
+  accountdatabase:
+    image: postgres:latest
+    container_name: accountdatabase
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: manman
+      POSTGRES_DB: accountsdb
+      PGDATA: /var/lib/postgresql/accounts/data/db
+    volumes:
+      - /Users/user/mnt/services/accounts:/var/lib/postgresql/data
+    ports:
+      - "59008:5432"
+
+  profiledatabase:
+    image: postgres:latest
+    container_name: profiledatabase
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: manman
+      POSTGRES_DB: profiledb
+      PGDATA: /var/lib/postgresql/profiles/data/db
+    volumes:
+      - /Users/user/mnt/services/profiles:/var/lib/postgresql/data
+    ports:
+      - "59009:5432"
+
+# services
+  account-service:
+    build: src/account-service
+    ports:
+      - 8000
+      - 9000
+    restart: on-failure
+    depends_on:
+      - accountdatabase
+  profile-service:
+    build: src/profile-service
+    ports:
+      - 8001
+      - 9001
+    restart: on-failure
+    depends_on:
+      - profiledatabase
+  chat-service:
+    build: src/chat-service
+    ports:
+      - 8002
+  notification-service:
+    build: src/notification-service
+    ports:
+      - 8003
